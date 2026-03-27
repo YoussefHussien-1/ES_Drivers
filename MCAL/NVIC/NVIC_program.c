@@ -96,13 +96,57 @@ Std_ReturnType NVIC_SetPriority(IRQn_t IRQn, u32 Copy_Priority)
 {
     Std_ReturnType Local_Function = E_OK;
     if(IRQn <= 240){
+        NVIC_IPR[IRQn / 4] &= ~( (0xFF) << ((IRQn % 4) * 8) );
+
         NVIC_IPR[IRQn/4] |= (Copy_Priority << (((IRQn % 4)* 8)+4));
     }
 
+    else
+    {
+        Local_Function = E_NOT_OK;
+    }
     return Local_Function;
     
 }
 
+
+
+
+
+
+Std_ReturnType NVIC_GetPriority(IRQn_t IRQn,u8 Copy_pu8Priority)
+{
+    Std_ReturnType Local_Function = E_OK;
+    if (IRQn <= 240 && (Copy_pu8Priority != NULL))
+    {
+        /* code */
+
+        *Copy_pu8Priority = (NVIC_IPR[IRQn / 4] >> (((IRQn % 4) * 8) + 4)) & 0x0F;
+    }
+    else{
+        Local_Function = E_NOT_OK;
+    }
+    return Local_Function;
+}
+
+
+
+Std_ReturnType NVIC_SetPriorityGrouping(u32 priority_grouping)
+{
+    
+    SCB_AIRCR = priority_grouping;
+    
+}
+
+
+
+Std_ReturnType NVIC_SystemReset(void)
+{
+    SCB_AIRCR = 0x05FA0004;
+
+
+    while(1);
+}
 
 #endif // NVIC_PROGRAM_C_
 

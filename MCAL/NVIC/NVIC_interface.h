@@ -11,6 +11,7 @@
 
 typedef u8      IRQn_t;
 
+Std_ReturnType NVIC_SetPriorityGrouping(u32 priority_grouping);
 Std_ReturnType NVIC_EnableIRQ(IRQn_t IRQn);
 Std_ReturnType NVIC_DisableIRQ(IRQn_t IRQn);
 Std_ReturnType NVIC_GetPendingIRQ(IRQn_t IRQn);
