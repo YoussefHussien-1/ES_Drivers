@@ -48,7 +48,7 @@ Std_ReturnType GPIO_SetPinMode(u8 Copy_PortId , u8 Copy_PinId, u8 Copy_PinMode){
             GPIOPB_CRH &= ~((0b1111) << ((Copy_PinId-8)*4));
             GPIOPB_CRH |= (Copy_PinMode << ((Copy_PinId-8)*4));
         }else{
-            Local_FuncitonStatus = E_NOT_OK;
+            Local_FunctionStatus = E_NOT_OK;
         }
         Local_FunctionStatus = E_OK;
         break;
@@ -62,7 +62,7 @@ Std_ReturnType GPIO_SetPinMode(u8 Copy_PortId , u8 Copy_PinId, u8 Copy_PinMode){
             GPIOPC_CRH &= ~((0b1111) << ((Copy_PinId-8)*4));
             GPIOPC_CRH |= (Copy_PinMode << ((Copy_PinId-8)*4));
         }else{
-            Local_FuncitonStatus = E_NOT_OK;
+            Local_FunctionStatus = E_NOT_OK;
         }
         Local_FunctionStatus = E_OK;
         break;

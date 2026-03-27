@@ -78,5 +78,10 @@
 
 
 Std_ReturnType GPIO_SetPinMode(u8 Copy_PortId , u8 Copy_PinId, u8 Copy_PinMode);
+/* Function to Set Pin Value (High / Low) */
+Std_ReturnType GPIO_SetPinValue(u8 Copy_PortId , u8 Copy_PinId, u8 Copy_PinValue);
+
+/* Function to Get Pin Value */
+Std_ReturnType GPIO_GetPinValue(u8 Copy_PortId , u8 Copy_PinId, u8 *Copy_PinReturnValue);
 
 #endif /**< GPIO_CONFIG_H_ */
