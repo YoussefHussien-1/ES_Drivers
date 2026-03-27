@@ -17,7 +17,7 @@
 =================================================================================*/
 
 /*------------------- System Clock Selection -------------------*/
-#define RCC_SYSCLK       RCC_PLL
+#define RCC_SYSCLK       RCC_HSE
 /* 
    Select the system clock source:
    Options:

@@ -10,9 +10,13 @@
 #define     EXTI_INTERFACE_H_
 #include "LIB/STD_TYPES.h"
 
+#define EXTI_RTSR       0
+#define EXTI_FTSR       1
+#define EXTI_ON_CHANGE  2
 
 
-
+#define EXTI_LINE0      0
+#define EXTI_LINE1      1
 /* Prototypes */
 Std_ReturnType EXTI_vEnableLine(u8 Copy_Line);
 Std_ReturnType EXTI_vDisableLine(u8 Copy_Line);
