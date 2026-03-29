@@ -8,7 +8,7 @@
 
 #ifndef     EXTI_INTERFACE_H_
 #define     EXTI_INTERFACE_H_
-#include "LIB/STD_TYPES.h"
+
 
 #define EXTI_RTSR       0
 #define EXTI_FTSR       1

@@ -1,3 +1,8 @@
+#ifndef     AFIO_PROGRAM_C_
+#define     AFIO_PROGRAM_C_
+
+
+
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
@@ -21,3 +26,6 @@ void AFIO_vSetEXTIConfiguration(u8 Copy_u8Line, u8 Copy_u8Port)
     /* 4. حط قيمة البورت (A أو B أو C) في المكان المظبوط */
     AFIO->EXTICR[Local_u8RegIndex] |=  ( (Copy_u8Port) << Local_u8Shift );
 }
+
+
+#endif

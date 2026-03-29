@@ -6,15 +6,18 @@
 /*********************************************************************************/
 
 
+#ifndef EXTI_PROGRAM_C_
+#define EXTI_PROGRAM_C_
+
+
 /************************************< LIB >************************************/
 #include "STD_TYPES.h"      // Standard data types definitions
 #include "BIT_MATH.h"       // Bit manipulation macros (SET_BIT, CLR_BIT, GET_BIT)
 /************************************< MCAL >***********************************/
-#include "EXTI_interface.h" // NVIC interface header (API exposed to user)
-#include "EXTI_private.h"   // NVIC private registers and bit definitions
-#include "EXTI_config.h"    // NVIC user configuration (system clock settings)
+#include "EXTI_interface.h" // EXTI interface header (API exposed to user)
+#include "EXTI_private.h"   // EXTI private registers and bit definitions
+#include "EXTI_config.h"    // EXTI user configuration (system clock settings)
 /*******************************************************************************/
-
 
 Std_ReturnType EXTI_vEnableLine(u8 Copy_Line)
 {
@@ -99,3 +102,4 @@ Std_ReturnType EXTI_vClearPendingFlag(u8 Copy_Line)
 }
 
 
+#endif
