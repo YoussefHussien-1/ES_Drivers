@@ -8,6 +8,6 @@
 #define     SPI_INTERFACE_H_
 
 Std_ReturnType Spi_init(void);
-u8 Spi_u8Transmit(u8 Copy-u8Data);
+u8 Spi_u8Transmit(u8 Copy_u8Data);
 u8 Spi_u8Receive(void);
 #endif

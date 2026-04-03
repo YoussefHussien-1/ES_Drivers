@@ -1,57 +1,47 @@
-/**< LIB file calling */
-#include "BIT_MATH.h"
+/**< lib includes */
 #include "STD_TYPES.h"
-
-/**< MCAL file calling */
+#include "BIT_MATH.h"
+/**< mcal includes */
 #include "RCC_interface.h"
 #include "GPIO_interface.h"
-#include "NVIC_interface.h"
-#include "EXTI_interface.h"
-#include "AFIO_interface.h"
-
-Rcc_InitSysClock();// this function to initiat the clock
-Rcc_EnablePeripheral(RCC_APB2, 2); // enable gpio port a
-Rcc_EnablePeripheral(RCC_APB2, 4); // enable gpio port c
-Rcc_EnablePeripheral(RCC_APB2, 0); // enable afio
-
-// define pins of gpio
-
-GPIO_SetPinMode(GPIO_PortA , GPIO_PIN0, GPIO_INPUT_PULL_UP_OR_DOWN);
-GPIO_SetPinValue(GPIO_PortA , GPIO_PIN0, GPIO_HIGH);
+#include "UART_interface.h"
+#include "UART_private.h"
+/**< HALS include */
+#include "HGPS_interface.h"
+#include "LCD_interface.h"
 
 
-GPIO_SetPinMode(GPIO_PortC , GPIO_PIN13, GPIO_OUTPUT_2MHZ_PUSH_PULL);
+int main(void){
+    // RCC INIT
+    Rcc_InitSysClock();
+    Rcc_EnablePeripheral(2 ,RCC_APB2);// gpio
+    Rcc_EnablePeripheral(17, RCC_APB1); // uart
+    Rcc_EnablePeripheral(12, RCC_APB2);
+
+    GPIO_SetPinMode(GPIO_PortA , GPIO_PIN2, GPIO_OUTPUT_10MHZ_AF_PUSH_PULL);        //  TX pin
+    GPIO_SetPinMode(GPIO_PortA , GPIO_PIN3, GPIO_INPUT_FLOATING);                   //  RX pin
+    GPIO_SetPinMode(GPIO_PortA, GPIO_PIN5, GPIO_OUTPUT_10MHZ_PUSH_PULL);
+    // init prepheral UART
+    MUSART_voidInit(UART2, 9600);
+    // init GPS (HAL)
+    HGPS_voidInit();
+    // init HLCD
+    HLCD_voidInit();
 
 
 
-AFIO_vSetEXTIConfiguration(EXTI_LINE0, AFIO_PORTA);
+    u8 GPS_u8Buffer[100];
+    f32 Current_Altitude = 0;
+    u8 Alt_Text[20];
+    
+    while(true){
+        HGPS_voidGetFullSentence(GPS_u8Buffer);
+
+        Current_Altitude = HGPS_f32GetAltitude(GPS_u8Buffer);
 
 
-EXTI_vSetSignalLatch(EXTI_LINE0, EXTI_FTSR);
-EXTI_vEnableLine(EXTI_LINE0);
-
-
-NVIC_EnableIRQ(6);
-
-
-while (1);
-
-
-/* دالة الـ Interrupt (الـ Handler) */
-void EXTI0_IRQHandler(void)
-{
-    // Toggle للـ LED
-    static u8 flag = 0;
-    if(flag == 0){
-        GPIO_SetPinValue(GPIO_PortA , GPIO_PIN0, GPIO_LOW);
-        flag = 1;
-    }else{
-        GPIO_SetPinValue(GPIO_PortA , GPIO_PIN0, GPIO_HIGH);
-        flag = 0;
+        ftoa(Current_Altitude, Alt_Text, 2);
+        HLCD_voidPrintString(Alt_Text);
+        
     }
-
-    // مهم جداً: امسح العلم عشان ميفضلش يدخل هنا للأبد
-    EXTI_vClearPendingFlag(EXTI_LINE0);
-
 }
-
